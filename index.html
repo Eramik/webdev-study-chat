@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<title>Чат</title>
+	</head>
+	
+	<body>
+		<div id="body">
+			<div id="Output">
+				<p>History is empty</p>
+			</div>
+					<input type="text" id="Nick" placeholder="Nick"/>
+					<input type="text" id="Message" placeholder="Message"/>
+					<button type="button" id="Send">Send</button>
+				</form>
+		</div>
+	<script>
+		$("#Send").click(function(){
+			$.ajax ({
+				method: "POST",
+				  url: "chat.php",
+				  data: { 
+						mode: "New message",
+						name: $("#Nick").val(),
+						message: $("#Message").val() }
+						
+				})
+				  .done(function( msg ) {
+					alert( "Data Saved: " + msg );
+			});
+		});
+		
+		$(document).ready(function(){
+			updateHistory();
+	//		setInterval(updateHistory, 1000);
+		});
+		
+		function updateHistory(){
+			$.ajax ({
+				method: "POST",
+				url: "chat.php",
+				data: { 
+					mode: "Get history" }	
+				})
+				.done(function( msg ) {
+					var log = JSON.parse(msg);
+					$("#Output").html("<p></p>");
+					alert("log['msgs'].lenght = " + log.msgs.lenght); //!
+					for(var i = 0; i < log.lenght; i++) { // !
+						$("#Output").html( $("#Output").html() +"<p><b>" + log[i]["nick"] + ": </b>" + log[i]["message"] + "</p>");
+					}
+				});
+			}
+	</script>
+	
+	</body>
+</html>
