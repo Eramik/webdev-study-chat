@@ -47,10 +47,10 @@
 				.done(function( msg ) {
 					var log = JSON.parse(msg);
 					$("#Output").html("<p></p>");
-					alert("log['msgs'].lenght = " + log.msgs.lenght); //!
-					for(var i = 0; i < log.lenght; i++) { // !
+					alert(log['msgs'].lenght); 
+					/*for(var i = 0; i < log.lenght; i++) { 
 						$("#Output").html( $("#Output").html() +"<p><b>" + log[i]["nick"] + ": </b>" + log[i]["message"] + "</p>");
-					}
+					}*/
 				});
 			}
 	</script>
