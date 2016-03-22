@@ -10,9 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 		else if($_POST["mode"] == "New message") {
 			$log = json_decode(file_get_contents("log.json"), true);
-			$log["msgs"][] = array("nick" => $_POST["name"], "message" => $_POST["message"]);
+			
+			$log["msgs"][] = array("nick" =>  inputSequrity($_POST["name"]), "message" =>  inputSequrity($_POST["message"]) );
 			file_put_contents("log.json", json_encode($log));
 		}
 }
+
+function inputSequrity($data) {
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
 
 ?>

@@ -27,8 +27,8 @@
 				  url: "chat.php",
 				  data: { 
 						mode: "New message",
-						name: inputSequrity( $("#Nick").val() ),
-						message: inputSequrity( $("#Message").val() )}
+						name: $("#Nick").val(),
+						message:$("#Message").val()}
 						
 				})
 				  .done(function( msg ) {
@@ -41,13 +41,6 @@
 			updateHistory();
 			setInterval(updateHistory, 1000);
 		});
-		
-		function inputSequrity($data) {
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
 		
 		function updateHistory(){
 			$.ajax ({
