@@ -27,12 +27,12 @@
 				  url: "chat.php",
 				  data: { 
 						mode: "New message",
-						name: $("#Nick").val(),
-						message: $("#Message").val() }
+						name: inputSequrity( $("#Nick").val() ),
+						message: inputSequrity( $("#Message").val() )}
 						
 				})
 				  .done(function( msg ) {
-					$('#Message').val('');;
+					$('#Message').val('');
 					updateHistory();
 			});
 		});
@@ -41,6 +41,13 @@
 			updateHistory();
 			setInterval(updateHistory, 1000);
 		});
+		
+		function inputSequrity($data) {
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
 		
 		function updateHistory(){
 			$.ajax ({
