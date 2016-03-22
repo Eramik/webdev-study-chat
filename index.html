@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
+		<link rel="stylesheet" type="text/css" href="chat.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<title>Чат</title>
 	</head>
@@ -18,6 +19,9 @@
 		</div>
 	<script>
 		$("#Send").click(function(){
+			if($("#Nick").val() == "" || $("#Message").val() == "")
+				return;
+				
 			$.ajax ({
 				method: "POST",
 				  url: "chat.php",
@@ -28,13 +32,14 @@
 						
 				})
 				  .done(function( msg ) {
-					alert( "Data Saved: " + msg );
+					$('#Message').val('');;
+					updateHistory();
 			});
 		});
 		
 		$(document).ready(function(){
 			updateHistory();
-	//		setInterval(updateHistory, 1000);
+			setInterval(updateHistory, 1000);
 		});
 		
 		function updateHistory(){
@@ -47,11 +52,10 @@
 				.done(function( msg ) {
 					var log = JSON.parse(msg);
 					$("#Output").html("<p></p>");
-					alert(log['msgs'].lenght); 
-					/*for(var i = 0; i < log.lenght; i++) { 
-						$("#Output").html( $("#Output").html() +"<p><b>" + log[i]["nick"] + ": </b>" + log[i]["message"] + "</p>");
-					}*/
-				});
+					for(var i = log['msgs'].length - 10; i < log['msgs'].length ; i++) { 
+						$("#Output").html( $("#Output").html() +"<b>" + log["msgs"][i]["nick"] + ": </b>" + log["msgs"][i]["message"] + "<br>");
+					}
+				})
 			}
 	</script>
 	
